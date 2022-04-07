@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import app from "../../firebase.init";
 
 const auth = getAuth(app);
@@ -10,6 +14,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState([]);
   // validation
   const [validated, setValidated] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   const handleEmailBlur = (event) => {
     setEmail(event.target.value);
@@ -25,24 +30,41 @@ const LoginForm = () => {
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
+      // return;
     }
     setValidated(true);
     // validation start
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-        // ..
-      });
+    if (registered) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+          // ..
+        });
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+          // ..
+        });
+    }
 
     e.preventDefault();
   };
 
+  const handleRegistered = (e) => {
+    setRegistered(e.target.checked);
+  };
+
   return (
     <div className="w-50 mx-auto">
+      <h2>Please {registered ? "Login" : "Registered"}</h2>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -69,8 +91,15 @@ const LoginForm = () => {
             Please choose valid password.
           </Form.Control.Feedback>
         </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            onChange={handleRegistered}
+            type="checkbox"
+            label="Already registered?"
+          />
+        </Form.Group>
         <Button variant="primary" type="submit">
-          Submit
+          {registered ? "Login" : "Register"}
         </Button>
       </Form>
     </div>
