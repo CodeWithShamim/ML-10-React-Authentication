@@ -2,6 +2,7 @@ import "./App.css";
 import app from "./firebase.init";
 import {
   getAuth,
+  GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
@@ -12,6 +13,7 @@ const auth = getAuth(app);
 function App() {
   const [user, setUser] = useState({});
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
 
   const handleGoogleSingIn = () => {
     signInWithPopup(auth, googleProvider)
@@ -34,6 +36,18 @@ function App() {
       });
   };
 
+  const handleGithubSingIn = () => {
+    signInWithPopup(auth, githubProvider)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log("Error is", error);
+      });
+  };
+
   return (
     <div className="App">
       {user.uid ? (
@@ -41,6 +55,7 @@ function App() {
       ) : (
         <>
           <button onClick={handleGoogleSingIn}>Google sign in</button>
+          <button onClick={handleGithubSingIn}>Github sign in</button>
         </>
       )}
       <div>
