@@ -36,8 +36,13 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={handleGoogleSingIn}>Google sign in</button>
-      <button onClick={handleGoogleSingOut}>Sign out</button>
+      {user.uid ? (
+        <button onClick={handleGoogleSingOut}>Sign out</button>
+      ) : (
+        <>
+          <button onClick={handleGoogleSingIn}>Google sign in</button>
+        </>
+      )}
       <div>
         <h2>Name: {user.displayName}</h2>
         <p>Email: {user.email}</p>
