@@ -10,4 +10,5 @@
 8. turn on google authentication from (firebase > Authentication > sign in methid > enable google sign in)
 
 9. create google provider into app.js using const googleProvider = new GoogleAuthProvider() import {GoogleAuthProvider} from firebase/auth
-10. 
+10. using signInWithPopup and pass auth & provider
+11. handle .then(if successful) & .catch (if error)
