@@ -7,6 +7,8 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   updateProfile,
+  FacebookAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import app from "../../firebase.init";
 
@@ -92,6 +94,14 @@ const LoginForm = () => {
   const handleNameBlur = (e) => {
     setName(e.target.value);
   };
+
+  const facebookProvider = new FacebookAuthProvider();
+  const handleFacebookLogin = () => {
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => console.log(result.user))
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="w-50 mx-auto">
       <h2>Please {registered ? "Login" : "Registered"}</h2>
@@ -150,6 +160,13 @@ const LoginForm = () => {
         <br />
         <Button variant="primary" type="submit">
           {registered ? "Login" : "Register"}
+        </Button>
+        <Button
+          className="ms-3"
+          onClick={handleFacebookLogin}
+          variant="primary"
+        >
+          Facebook Login
         </Button>
       </Form>
     </div>
