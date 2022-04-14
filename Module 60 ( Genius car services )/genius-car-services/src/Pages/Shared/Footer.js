@@ -4,8 +4,9 @@ const Footer = () => {
   const todayDate = new Date();
   const getYear = todayDate.getFullYear();
   return (
-    <div>
-      <p>Copyright @ {getYear}</p>
+    <div className="bg-secondary py-5 mt-5">
+      <p className="text-white">Copyright @ {getYear}</p>
+      <h4 className="text-white">Genius Car Service</h4>
     </div>
   );
 };
