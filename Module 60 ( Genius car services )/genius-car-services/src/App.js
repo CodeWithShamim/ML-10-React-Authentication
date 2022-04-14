@@ -4,6 +4,7 @@ import Header from "./Pages/Shared/Header";
 import Home from "./Pages/Home/Home/Home";
 import Footer from "./Pages/Shared/Footer";
 import Services from "./Pages/Home/Services/Services";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
